@@ -1,13 +1,28 @@
-import { useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { nav, media } from '../data/site'
 import { ease } from './ui'
 import { ScrollProgress } from './Footer'
 
+// Hidden control panel: loaded only when someone taps the logo 3 times.
+const AdminPanel = lazy(() => import('../admin/AdminPanel'))
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [admin, setAdmin] = useState(false)
+  const taps = useRef({ n: 0, t: 0 })
+
+  const onLogoTap = () => {
+    const now = Date.now()
+    taps.current.n = now - taps.current.t < 600 ? taps.current.n + 1 : 1
+    taps.current.t = now
+    if (taps.current.n >= 3) {
+      taps.current.n = 0
+      setAdmin(true)
+    }
+  }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -39,7 +54,7 @@ export default function Navbar() {
             scrolled ? 'py-3' : 'py-5'
           }`}
         >
-          <a href="#top" aria-label="Mariwan Group" className="shrink-0">
+          <a href="#top" aria-label="Mariwan Group" className="shrink-0 select-none" onClick={onLogoTap}>
             <img src={media('brand/logo.webp')} alt="Mariwan Group" className="h-6 md:h-7 w-auto" />
           </a>
 
@@ -111,6 +126,12 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {admin && (
+        <Suspense fallback={null}>
+          <AdminPanel open={admin} onClose={() => setAdmin(false)} />
+        </Suspense>
+      )}
     </>
   )
 }

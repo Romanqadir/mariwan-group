@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Camera, Sparkles, Music, CalendarHeart, Send, Check } from 'lucide-react'
 import { whatsappLink, weekDays, media } from '../data/site'
 import { SectionHeading, ease } from './ui'
+import { addBooking } from '../admin/store'
 
 const serviceOptions = [
   { value: '📸 فۆتۆگرافی و ڤیدیۆ', label: 'فۆتۆگرافی و ڤیدیۆ', icon: Camera },
@@ -37,6 +38,7 @@ export default function Booking() {
       `📅 بەروار: ${date} (${dayName})`,
       `📝 تێبینی: ${notes || 'هیچ'}`,
     ].join('\n')
+    addBooking({ name, services: selected, date, dayName, notes: notes || 'هیچ' })
     window.open(whatsappLink(msg), '_blank', 'noopener')
   }
 
