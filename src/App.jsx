@@ -8,12 +8,11 @@ import Decor from './components/Decor'
 import Packages from './components/Packages'
 import Booking from './components/Booking'
 import Contact from './components/Contact'
-import Footer, { FloatingWhatsApp, ScrollProgress } from './components/Footer'
+import Footer, { FloatingWhatsApp } from './components/Footer'
 
 export default function App() {
   return (
     <div className="grain">
-      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />

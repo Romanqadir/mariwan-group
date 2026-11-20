@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Menu, X } from 'lucide-react'
 import { nav, media } from '../data/site'
 import { ease } from './ui'
+import { ScrollProgress } from './Footer'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -25,11 +26,19 @@ export default function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 1, ease, delay: 0.3 }}
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-          scrolled ? 'bg-ink/80 backdrop-blur-xl border-b border-white/5 py-3' : 'py-5'
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+        className={`fixed inset-x-0 top-0 z-50 m-0 transition-colors duration-500 ${
+          scrolled
+            ? 'bg-ink/95 backdrop-blur-xl border-b border-white/5 before:absolute before:inset-x-0 before:bottom-full before:h-[200px] before:bg-ink'
+            : ''
         }`}
       >
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 md:px-8">
+        <ScrollProgress />
+        <div
+          className={`mx-auto flex max-w-7xl items-center justify-between px-4 md:px-8 transition-[padding] duration-500 ${
+            scrolled ? 'py-3' : 'py-5'
+          }`}
+        >
           <a href="#top" aria-label="Mariwan Group" className="shrink-0">
             <img src={media('brand/logo.webp')} alt="Mariwan Group" className="h-6 md:h-7 w-auto" />
           </a>

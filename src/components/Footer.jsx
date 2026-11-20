@@ -8,7 +8,8 @@ const socialIcons = { instagram: Instagram, tiktok: TikTok, snapchat: Snapchat }
 export function ScrollProgress() {
   const { scrollYProgress } = useScroll()
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 })
-  return <motion.div style={{ scaleX }} className="fixed top-0 inset-x-0 z-[55] h-[2px] origin-right bg-gold" />
+  // sits on the bottom edge of the header, so nothing appears above the header
+  return <motion.div style={{ scaleX }} className="absolute bottom-0 inset-x-0 h-[2px] origin-right bg-gold" />
 }
 
 export function FloatingWhatsApp() {
@@ -67,7 +68,7 @@ export default function Footer() {
         <div className="mt-16 flex flex-col-reverse items-center justify-between gap-4 border-t border-white/5 pt-8 text-xs text-mute md:flex-row">
           <p dir="ltr">© {new Date().getFullYear()} Mariwan Group — All rights reserved.</p>
           <p dir="ltr">
-            Designed by <span className="text-ivory/80">Mohammed Qaraman</span>
+            Designed by <span className="text-ivory/80">Abdulkhaliq Qadir</span>
           </p>
           <a href="#top" className="inline-flex items-center gap-2 hover:text-gold transition">
             گەڕانەوە بۆ سەرەوە <ArrowUp size={14} />
